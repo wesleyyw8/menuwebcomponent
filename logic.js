@@ -6,7 +6,7 @@ class Accordion extends HTMLElement {
     let shadowRoot = this.attachShadow({mode: 'open'});
 
     shadowRoot.innerHTML = `
-      <div class="accordion__container">
+      <div class="accordion__container" aria-labelledby="${this.getAttribute('id')}">
         <slot></slot>
       </div>
     `;   
@@ -33,7 +33,7 @@ class AccordionItem extends HTMLElement {
           transition: max-height 0.2s ease-out;
         }
         .accordion {
-          background-color: #eee;
+          background-color: white;
           color: #444;
           cursor: pointer;
           padding: 18px;
@@ -44,24 +44,39 @@ class AccordionItem extends HTMLElement {
           font-size: 15px;
           transition: 0.4s;
         }
+        .accordion {
+          border-radius: 5px;
+          margin-top: 5px;
+          border: 3px solid black;
+          font-weight: bold;
+        }
 
-        .active, .accordion:hover {
-          background-color: #ccc;
+        .active {
+          border: 3px solid black;
+          border-radius: 5px;
+          margin-top: 5px;
+        }
+        .accordion:hover {
+          cursor: pointer;
         }
       </style>
-      <button class="accordion">${this.getAttribute('title')}</button>
+      <button class="accordion" aria-expanded="false">${this.getAttribute('title')}</button>
       <div class="panel">
         <p>${this.getAttribute('content')}</p>
       </div>
     `;
+    
     this.$button = this.shadowRoot.querySelector('button.accordion');
     
     this.$button.addEventListener('click', (e) => {
       let panel = this.$button.nextElementSibling;
-      this.$button.classList.toggle("active");
       if (panel.style.maxHeight){
         panel.style.maxHeight = null;
+        panel.classList.remove('active')
+        this.$button.setAttribute("aria-expanded", "false");
       } else {
+        this.$button.setAttribute("aria-expanded", "true");
+        panel.classList.add('active')
         panel.style.maxHeight = panel.scrollHeight + "px";
       } 
     });
