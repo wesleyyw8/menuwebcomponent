@@ -6,7 +6,32 @@ class Accordion extends HTMLElement {
     let shadowRoot = this.attachShadow({mode: 'open'});
 
     shadowRoot.innerHTML = `
+      <div class="accordion__container">
+        <slot></slot>
+      </div>
+    `;   
+  }
+}
+
+class AccordionItem extends HTMLElement {
+  constructor() {
+    super();
+  }
+  toggleDrawer() {
+    console.log('toggle!!!')
+  }
+  connectedCallback() {
+    let shadowRoot = this.attachShadow({mode: 'open'});
+
+    shadowRoot.innerHTML = `
       <style>
+         .panel {
+          padding: 0 18px;
+          background-color: white;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.2s ease-out;
+        }
         .accordion {
           background-color: #eee;
           color: #444;
@@ -23,59 +48,27 @@ class Accordion extends HTMLElement {
         .active, .accordion:hover {
           background-color: #ccc;
         }
-
-        .panel {
-          padding: 0 18px;
-          background-color: white;
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.2s ease-out;
-        }
       </style>
-      <div class="accordion__container">
-        <button class="accordion">Section 1</button>
-        <div class="panel">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
-
-        <button class="accordion">Section 2</button>
-        <div class="panel">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
-
-        <button class="accordion">Section 3</button>
-        <div class="panel">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
-
+      <button class="accordion">${this.getAttribute('title')}</button>
+      <div class="panel">
+        <p>${this.getAttribute('content')}</p>
       </div>
     `;
-    this.$buttons = this.shadowRoot.querySelectorAll('button.accordion');
-    this.$buttons.forEach((button) => {
-      button.addEventListener('click', (e) => {
-        button.classList.toggle("active");
-        var panel = button.nextElementSibling;
-        if (panel.style.maxHeight){
-          panel.style.maxHeight = null;
-        } else {
-          panel.style.maxHeight = panel.scrollHeight + "px";
-        } 
-      });
-    })
-  }
+    this.$button = this.shadowRoot.querySelector('button.accordion');
+    
+    this.$button.addEventListener('click', (e) => {
+      let panel = this.$button.nextElementSibling;
+      this.$button.classList.toggle("active");
+      if (panel.style.maxHeight){
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      } 
+    });
 
-  disconnectedCallback() {
-    console.log('disconnected!');
-  }
-
-  attributeChangedCallback(name, oldVal, newVal) {
-    console.log(`Attribute: ${name} changed!`);
-  }
-
-  adoptedCallback() {
-    console.log('adopted!');
   }
 }
 
-window.customElements.define('wc-accordion', Accordion)
+window.customElements.define('wc-accordion-item', AccordionItem);
+window.customElements.define('wc-accordion', Accordion);
 
