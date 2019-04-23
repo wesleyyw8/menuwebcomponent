@@ -1,15 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+  <style>
+    .container {
+      border: 1px solid black;
+    }
+    .container1 {
+      width: 300px;
+    }
+    .container2 {
+      width: 400px;
+    }
+  </style>
 </head>
 <body>
-
-<wc-accordion>
-	<wc-accordion-item title="titleTestValue" content="contentTestValue"></wc-accordion-item>
-  <wc-accordion-item title="titleTestValue2" content="contentTestValue2"></wc-accordion-item>
-  <wc-accordion-item title="titleTestValue3" content="contentTestValue3"></wc-accordion-item>
-</wc-accordion>
+<div class="container container1">
+  <wc-accordion>
+    <wc-accordion-item title="titleTestValue" content="contentTestValue"></wc-accordion-item>
+    <wc-accordion-item title="titleTestValue2" content="contentTestValue2"></wc-accordion-item>
+    <wc-accordion-item title="titleTestValue3" content="contentTestValue3"></wc-accordion-item>
+  </wc-accordion>
+</div>
+<br>
+<div class="container container2">
+  <wc-accordion>
+    <wc-accordion-item title="titleTestValue" content="contentTestValue"></wc-accordion-item>
+    <wc-accordion-item title="titleTestValue2" content="contentTestValue2"></wc-accordion-item>
+    <wc-accordion-item title="titleTestValue3" content="contentTestValue3"></wc-accordion-item>
+  </wc-accordion>
+</div>
 <script src="logic.js"></script>
 </body>
 </html>
