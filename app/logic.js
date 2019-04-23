@@ -40,6 +40,8 @@ class AccordionItem extends HTMLElement {
           outline: none;
           font-size: 15px;
           transition: 0.4s;
+          display: flex;
+          justify-content: space-between;
         }
         .accordion {
           border-radius: 5px;
@@ -56,8 +58,15 @@ class AccordionItem extends HTMLElement {
         .accordion:hover {
           cursor: pointer;
         }
+        .accordion__minus {
+          display: none;
+        }
       </style>
-      <button class="accordion" aria-expanded="false">${this.getAttribute('title')}</button>
+      <button class="accordion" aria-expanded="false">
+        ${this.getAttribute('title')}
+        <span class="accordion__plus">+</span>
+        <span class="accordion__minus">-</span>
+      </button>
       <div class="panel">
         <p>${this.getAttribute('content')}</p>
       </div>
@@ -71,8 +80,12 @@ class AccordionItem extends HTMLElement {
         panel.style.maxHeight = null;
         panel.classList.remove('active');
         this.$button.setAttribute("aria-expanded", "false");
+        this.$button.getElementsByClassName('accordion__plus')[0].style.display = 'block';
+        this.$button.getElementsByClassName('accordion__minus')[0].style.display = 'none';
       } else {
         this.$button.setAttribute("aria-expanded", "true");
+        this.$button.getElementsByClassName('accordion__plus')[0].style.display = 'none';
+        this.$button.getElementsByClassName('accordion__minus')[0].style.display = 'block';
         panel.classList.add('active');
         panel.style.maxHeight = panel.scrollHeight + "px";
       } 
