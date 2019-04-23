@@ -1,5 +1,11 @@
 module.exports = function(grunt){
   grunt.initConfig({
+    jshint: {
+       all : ['app/**/*js'],
+       options: {
+        'esversion': 6,
+      }  
+    },
     connect: {
       server: {
         options:{
@@ -13,6 +19,7 @@ module.exports = function(grunt){
       }
     }
   });
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.registerTask('default', ['connect']);
+  grunt.registerTask('default', ['jshint','connect']);
 }

@@ -17,9 +17,6 @@ class AccordionItem extends HTMLElement {
   constructor() {
     super();
   }
-  toggleDrawer() {
-    console.log('toggle!!!')
-  }
   connectedCallback() {
     let shadowRoot = this.attachShadow({mode: 'open'});
 
@@ -72,11 +69,11 @@ class AccordionItem extends HTMLElement {
       let panel = this.$button.nextElementSibling;
       if (panel.style.maxHeight){
         panel.style.maxHeight = null;
-        panel.classList.remove('active')
+        panel.classList.remove('active');
         this.$button.setAttribute("aria-expanded", "false");
       } else {
         this.$button.setAttribute("aria-expanded", "true");
-        panel.classList.add('active')
+        panel.classList.add('active');
         panel.style.maxHeight = panel.scrollHeight + "px";
       } 
     });
